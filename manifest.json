@@ -1,0 +1,11 @@
+{
+  "name": "Serenade",
+  "description": "A soft, serif theme: ink-dark glass over a blurred wash of the current cover, editorial serif titles, and an accent colour that follows the album art.",
+  "preview": "assets/preview.jpg",
+  "readme": "README.md",
+  "usercss": "user.css",
+  "schemes": "color.ini",
+  "include": ["https://cdn.jsdelivr.net/gh/kailingma/spicetify-serenade@main/theme.js"],
+  "authors": [{ "name": "kailingma", "url": "https://github.com/kailingma" }],
+  "tags": ["dark", "glass", "serif", "dynamic"]
+}

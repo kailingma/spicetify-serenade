@@ -1,0 +1,418 @@
+/* ==========================================================================
+   Serenade — a soft, serif Spicetify theme
+   Ink-dark glass panels floating over a blurred wash of the current cover,
+   editorial serif titles, and an accent colour pulled from the album art.
+   https://github.com/kailingma/spicetify-serenade
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap");
+
+:root {
+  --sr-radius: 14px;
+  --sr-radius-sm: 8px;
+  --sr-panel: rgba(var(--spice-rgb-main), 0.56);
+  --sr-panel-solid: rgba(var(--spice-rgb-main), 0.9);
+  --sr-hairline: rgba(255, 255, 255, 0.07);
+  --sr-hover: rgba(255, 255, 255, 0.055);
+  --sr-serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --sr-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* ---------- ambient backdrop ------------------------------------------- */
+
+html,
+body {
+  background: rgb(var(--spice-rgb-main)) !important;
+}
+
+#serenade-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.serenade-art {
+  position: absolute;
+  inset: -15%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(90px) saturate(1.6) brightness(0.8);
+  transform: scale(1.15);
+  opacity: 0;
+  transition: opacity 1.4s var(--sr-ease);
+}
+
+.serenade-art.is-visible {
+  opacity: 1;
+}
+
+/* The veil sets how bright the backdrop can get. The top bar and the gaps
+   between panels sit straight on it, so theme.js measures each cover and sets
+   --sr-veil (0–1) so even the brightest part of the blurred art stays dark
+   enough for the top-bar controls and text to keep their contrast. It's one
+   even layer, so no part of the window is darker than it needs to be. */
+@property --sr-veil {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.45;
+}
+
+.serenade-veil {
+  position: absolute;
+  inset: 0;
+  background: rgba(var(--spice-rgb-main), var(--sr-veil));
+  transition: --sr-veil 1.4s var(--sr-ease);
+}
+
+/* Film grain keeps the big blurred gradients from banding. */
+.serenade-veil::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+#main {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- layout shell ------------------------------------------------ */
+
+.Root > div:first-child {
+  background: transparent !important;
+  gap: 10px;
+}
+
+/* Spotify paints these wrappers with the base colour. On glass that shows as
+   solid strips (e.g. a black band behind the floating player bar). */
+#global-nav-bar,
+#Desktop_LeftSidebar_Id,
+.Root__now-playing-bar {
+  background: transparent !important;
+}
+
+/* The three panels: library, main view, right sidebar */
+#Desktop_LeftSidebar_Id nav > div,
+#main-view,
+.Root > div:first-child > div:has(> .LayoutResizer__inline-start) > div {
+  background: var(--sr-panel) !important;
+  border: 1px solid var(--sr-hairline);
+  border-radius: var(--sr-radius) !important;
+  box-shadow: 0 18px 50px -20px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+/* Spotify paints some inner surfaces with --background-base; make them glass too */
+#main-view,
+#Desktop_LeftSidebar_Id,
+.Root > div:first-child > div:has(> .LayoutResizer__inline-start) {
+  --background-base: transparent;
+}
+
+/* ---------- search & top bar ------------------------------------------- */
+
+#global-nav-bar form {
+  border-radius: 999px;
+}
+
+/* The top bar sits on the backdrop, not in a panel, so Spotify's solid
+   "elevated" surfaces (round Home / Marketplace / profile buttons, the Ctrl+L
+   key hints) are redefined here as glass. Everything in the bar that uses
+   these tokens follows automatically. */
+#global-nav-bar {
+  --background-elevated-base: rgba(255, 255, 255, 0.07);
+  --background-elevated-highlight: rgba(255, 255, 255, 0.12);
+  --background-elevated-press: rgba(255, 255, 255, 0.05);
+  --background-highlight: rgba(255, 255, 255, 0.1);
+  --background-press: rgba(255, 255, 255, 0.05);
+  /* the bar's "page" colour is the backdrop itself */
+  --background-base: transparent;
+  /* outlines (e.g. Ctrl / L key caps) match the hairlines used elsewhere */
+  --essential-subdued: rgba(255, 255, 255, 0.2);
+}
+
+/* Spotify hides placeholder text under the Ctrl+L hint by painting a band of
+   the search box's colour over it. That only works on an opaque box; on glass
+   it shows as smudges, and the placeholder never actually reaches the hint. */
+.main-globalNav-searchInputKBDWrapper {
+  background: none !important;
+}
+
+#global-nav-bar form input {
+  background: var(--background-elevated-base) !important;
+  border: 1px solid var(--sr-hairline) !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+#global-nav-bar form input:hover {
+  background: var(--background-elevated-highlight) !important;
+}
+
+#global-nav-bar form input:focus {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(var(--spice-rgb-button), 0.6) !important;
+  box-shadow: 0 0 0 4px rgba(var(--spice-rgb-button), 0.12) !important;
+}
+
+/* Round top-bar buttons (Home, Marketplace, profile…) sit in fixed 48px
+   boxes, so Spotify's grow-on-hover gets clipped. Brighten them instead. */
+#global-nav-bar button {
+  --encore-button-hover-scale: 1 !important;
+  transition: background-color 0.2s, filter 0.2s, color 0.2s;
+}
+
+#global-nav-bar button:hover {
+  filter: brightness(1.25);
+}
+
+/* ---------- typography -------------------------------------------------- */
+
+/* Big page titles (playlists, albums, artists, profiles) go editorial. */
+[data-testid="entityTitle"] h1,
+.main-entityHeader-headerText {
+  font-family: var(--sr-serif) !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 0.95 !important;
+}
+
+/* Shelf headings on Home / Search */
+[data-testid="component-shelf"] h2,
+[data-testid="rich-title-row-shelf-header"] h2 {
+  font-family: var(--sr-serif) !important;
+  font-weight: 400 !important;
+  font-size: 2.1rem !important;
+  letter-spacing: -0.005em;
+}
+
+::selection {
+  background: rgba(var(--spice-rgb-button), 0.35);
+}
+
+/* ---------- cards ------------------------------------------------------- */
+
+.main-card-card {
+  border-radius: 12px !important;
+  transition: background 0.25s var(--sr-ease), transform 0.25s var(--sr-ease);
+}
+
+.main-card-card:hover {
+  background: var(--sr-hover) !important;
+  transform: translateY(-3px);
+}
+
+/* Home shortcut tiles */
+[data-testid="shortcut-background"] {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-radius: 10px !important;
+}
+
+[data-testid="shortcut-image"] {
+  border-radius: 10px 0 0 10px;
+}
+
+/* Filter chips */
+#main-view [role="checkbox"] {
+  border: 1px solid var(--sr-hairline);
+}
+
+/* ---------- track lists ------------------------------------------------- */
+
+[data-testid="tracklist-row"],
+.main-trackList-trackListRow {
+  border-radius: var(--sr-radius-sm) !important;
+  transition: background 0.15s;
+}
+
+[data-testid="tracklist-row"]:hover,
+.main-trackList-trackListRow:hover {
+  background: var(--sr-hover) !important;
+}
+
+.main-trackList-active {
+  background: linear-gradient(90deg, rgba(var(--spice-rgb-button), 0.16), transparent 70%) !important;
+}
+
+/* Home order: greeting/shortcuts, then Recents, then Made For <you>,
+   then everything else in Spotify's order.
+   (!important because Spicetify's own home-config stylesheet pins every
+   section to order 0.) */
+/* :not(.sr-x) only bumps specificity above Spicetify's ".main-home-content section" */
+.main-home-content > :not(.sr-x) {
+  order: 10 !important;
+}
+
+.main-home-content > :first-child {
+  order: 0 !important;
+}
+
+.main-home-content > [aria-label="Recents"] {
+  order: 1 !important;
+}
+
+.main-home-content > [aria-label^="Made For"] {
+  order: 2 !important;
+}
+
+/* Home: replace the flat grey header wash with a soft accent glow */
+.main-home-homeHeader {
+  background: radial-gradient(120% 100% at 15% 0%, rgba(var(--spice-rgb-button), 0.16), transparent 70%) !important;
+}
+
+/* Playlist / album header colour.
+   Spotify passes the header colour to each header layer inline (as
+   background-color or --background-base), but each page type composes it
+   differently (layer
+   opacity on some pages, a 70% gradient on others, extra shade layers), which
+   leaves visible bars and seams once the layers are translucent. Instead every
+   colour layer paints that same variable at one strength, and the action-bar
+   layer below the title fades it out into the glass.
+   The sticky top bar (.main-topBar-background) is left to Spotify: invisible
+   at the top of a page, fading in as you scroll. */
+.main-entityHeader-backgroundColor,
+[class*="actionBarBackground-background"] {
+  background-image: none !important;
+  opacity: 0.5 !important;
+}
+
+/* Some pages give the colour as an inline background-color (that still wins
+   here); others only as the --background-base variable. */
+:is(.main-entityHeader-backgroundColor, [class*="actionBarBackground-background"])[style*="--background-base"] {
+  background-color: var(--background-base);
+}
+
+/* Spotify's extra shade layer on top of the header colour */
+.main-entityHeader-backgroundColor + .main-entityHeader-backgroundColor {
+  display: none;
+}
+
+[class*="actionBarBackground-background"] {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+}
+
+/* ---------- now playing bar -------------------------------------------- */
+
+/* A floating glass bar, a step lighter than the panels so it reads as its
+   own surface without being boxed in. */
+[data-testid="now-playing-bar"] > div:first-child {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)),
+    rgba(var(--spice-rgb-highlight-elevated), 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 18px;
+  padding: 0 12px;
+  box-shadow: 0 20px 50px -18px rgba(0, 0, 0, 0.7);
+}
+
+[data-testid="now-playing-widget"] [data-testid="cover-art-image"] {
+  border-radius: 8px;
+}
+
+[data-testid="now-playing-widget"] [data-testid="cover-art-button"] {
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+/* Cat Jam extension: keep the dancing cat inside the bar, centred. */
+#catjam-webm {
+  width: 52px !important;
+  height: 52px !important;
+  margin: 0 14px 0 0 !important;
+  align-self: center;
+  object-fit: contain;
+}
+
+.main-nowPlayingBar-right {
+  align-items: center;
+}
+
+/* Main play / pause: light and quiet; the accent lives in the progress bar */
+[data-testid="control-button-playpause"] > span {
+  background: rgb(var(--spice-rgb-text)) !important;
+  color: rgb(var(--spice-rgb-main)) !important;
+}
+
+/* Progress bar: accent fill. Volume: neutral. */
+[data-testid="now-playing-bar"] [data-testid="progress-bar"] {
+  --bg-color: rgba(255, 255, 255, 0.14) !important;
+  --progress-bar-radius: 999px;
+}
+
+[data-testid="playback-progressbar"] [data-testid="progress-bar"] {
+  --fg-color: rgb(var(--spice-rgb-button)) !important;
+  --is-active-fg-color: rgb(var(--spice-rgb-button)) !important;
+}
+
+[data-testid="volume-bar"] [data-testid="progress-bar"] {
+  --fg-color: rgb(var(--spice-rgb-text)) !important;
+  --is-active-fg-color: rgb(var(--spice-rgb-button)) !important;
+}
+
+/* "Playing on <device>": quiet line under the bar, its right edge lined up
+   with the fullscreen button. Only the speaker icon carries the accent. */
+[data-testid="now-playing-bar"] > .encore-bright-accent-set {
+  margin-top: 6px;
+  background: transparent !important;
+  color: rgb(var(--spice-rgb-subtext)) !important;
+  --text-base: rgb(var(--spice-rgb-subtext));
+  justify-content: flex-end;
+  align-items: center;
+  padding-inline: 18px;
+}
+
+[data-testid="now-playing-bar"] > .encore-bright-accent-set svg {
+  fill: rgb(var(--spice-rgb-button));
+}
+
+/* ---------- menus, tooltips, popovers ---------------------------------- */
+
+.main-contextMenu-menu,
+[data-tippy-root] [role="menu"],
+#context-menu > ul {
+  background: rgba(var(--spice-rgb-main-elevated), 0.88) !important;
+  backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid var(--sr-hairline);
+  border-radius: 12px !important;
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.7) !important;
+}
+
+.main-contextMenu-menuItemButton {
+  border-radius: 6px !important;
+}
+
+/* ---------- scrollbars -------------------------------------------------- */
+
+.os-theme-spotify .os-scrollbar-handle {
+  background: rgba(255, 255, 255, 0.14) !important;
+  border-radius: 999px !important;
+}
+
+.os-theme-spotify .os-scrollbar-handle:hover,
+.os-theme-spotify .os-scrollbar-handle:active {
+  background: rgba(var(--spice-rgb-button), 0.6) !important;
+}
+
+/* ---------- resizer handles: a soft accent line on hover --------------- */
+
+.LayoutResizer__resize-bar:hover {
+  background: linear-gradient(transparent, rgba(var(--spice-rgb-button), 0.5), transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .serenade-art,
+  .main-card-card,
+  [data-testid="control-button-playpause"] > span {
+    transition: none !important;
+  }
+  .main-card-card:hover {
+    transform: none;
+  }
+}
