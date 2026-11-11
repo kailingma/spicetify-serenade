@@ -200,6 +200,24 @@ Hashed CSS-module classes (`button-module__button___hf2qg_marketplace`,
 Marketplace builds, so they're matched with `[class*="toggle-module__toggle-indicator___"]`
 etc. Toggle markup: `label > input[type=checkbox] + span(wrapper) > span(indicator)`.
 
+**Marketplace layout gotchas** (all fixed in `user.css`):
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| Toolbar covers the section heading (and "+ Add CSS") even at the top of the page | `.marketplace-header` is `position: sticky; top: 64px` to clear the 64px tab bar laid over the page, but nothing reserves those 64px, so it's pushed down onto the content. The Marketplace half-compensates with `margin-top: 60px` on `.marketplace-content`, which only works in block layout | `padding-top: 64px` on `section.contentSpacing:has(> .marketplace-content)` and `margin-top: 0` on `.marketplace-content`; one 20px gap below the toolbar (heading `margin-top: 0`) so block and grid layouts match |
+| Cards show through the toolbar / tab row while scrolling | Toolbar is sticky; glass was too clear. The sticky top bar fills with `--background-base`, which the theme sets transparent inside panels | Frosted elevated surface (`rgba(main-elevated,.84)` + blur) on the toolbar and on `.main-topBar-background:not([style*="--background-base"])`, whose `.main-topBar-overlay` is cleared there |
+| "+ Add CSS" floats over cards and other controls | `.marketplace-add-snippet-btn { position: sticky !important; bottom: 32px }` | On the Snippets page the section becomes a two-column grid (`.marketplace-content` is `display: contents`) and the button sits in the heading row, `position: static` |
+| Text hugs the element above and floats far from the next | Card metadata is a flex column; Marketplace margins don't collapse (0 above title, 20-24px below lines). "Last updated" is a second `.marketplace-card-desc` | Explicit rhythm: image 12 title 2 author·★ 10 description 8 date 12 tags |
+| Tags under the round install button | Button is absolutely positioned in the card corner | `padding-right: 52px` on `.marketplace-card__tags-container` |
+| "Load more" jammed against the panel edge | Footer has no bottom padding | `padding-bottom: 40px` on `.marketplace-footer` |
+| Buttons render in Arial | Module CSS asks for `spotify-circular`, which current Spotify doesn't ship | `[class*="button-module__button___"] { font-family: inherit }` |
+
+To check layout numerically after a change, measure the bars and heading
+(`getBoundingClientRect()` on `.marketplace-tabBar`, `.marketplace-header`,
+`.marketplace-card-type-heading`, `.marketplace-add-snippet-btn`,
+`.marketplace-grid`) on Themes and Snippets at scrollTop 0 and assert no
+overlaps; both tabs should give identical numbers.
+
 The settings dialog is Spicetify's shared popup:
 `generic-modal > .GenericModal.spicetify-popup > .spicetify-popup-container`
 with `.spicetify-popup-title`; other extensions' popups use the same, so
