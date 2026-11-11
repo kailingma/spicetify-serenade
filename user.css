@@ -372,6 +372,428 @@ body {
   fill: rgb(var(--spice-rgb-button));
 }
 
+/* ---------- Spicetify Marketplace -------------------------------------- */
+/* The Marketplace ships its own solid-black bars, Arial/system-ui text, and
+   loud tag colours. These rules bring it in line with the rest of the theme:
+   glass surfaces, Spotify's UI font, serif headings, quiet chips. */
+
+/* Tabs (Extensions / Themes / Snippets / Apps / Installed) as filter chips */
+.marketplace-tabBar-header {
+  gap: 8px;
+}
+
+.marketplace-tabBar-headerItemLink {
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  border: 1px solid var(--sr-hairline);
+  color: rgb(var(--spice-rgb-text)) !important;
+  transition: background-color 0.2s;
+}
+
+.marketplace-tabBar-headerItemLink .main-type-mestoBold {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.marketplace-tabBar-headerItemLink:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.marketplace-tabBar-headerItemLink.marketplace-tabBar-active {
+  background: rgb(var(--spice-rgb-text)) !important;
+  color: rgb(var(--spice-rgb-main)) !important;
+}
+
+/* Toolbar (version, sort, search, settings) and the README title bar */
+.marketplace-header {
+  background: rgba(255, 255, 255, 0.035) !important;
+  border: 1px solid var(--sr-hairline);
+  border-radius: var(--sr-radius) !important;
+  padding: 10px 12px 10px 16px !important;
+  margin-bottom: 12px;
+  font-family: inherit;
+}
+
+.marketplace-header__label {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: rgb(var(--spice-rgb-subtext)) !important;
+  letter-spacing: 0.02em;
+}
+
+.marketplace-header h1 {
+  font-family: var(--sr-serif) !important;
+  font-weight: 400 !important;
+  font-size: 2.2rem !important;
+  letter-spacing: -0.005em;
+}
+
+.marketplace-header-icon-button {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border: 1px solid var(--sr-hairline) !important;
+  border-radius: 999px !important;
+  color: rgb(var(--spice-rgb-text)) !important;
+  font: inherit !important;
+  font-size: 13px !important;
+  transition: background-color 0.2s;
+}
+
+#marketplace-update {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px !important;
+}
+
+.marketplace-header-icon-button:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Sort dropdown */
+.marketplace-header .Dropdown-control {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border: 1px solid var(--sr-hairline) !important;
+  border-radius: 999px !important;
+  padding: 6px 34px 6px 14px !important;
+  color: rgb(var(--spice-rgb-text)) !important;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.marketplace-header .Dropdown-control:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.marketplace-header .Dropdown-placeholder {
+  color: rgb(var(--spice-rgb-text)) !important;
+}
+
+.Dropdown-menu {
+  margin-top: 6px !important;
+  padding: 4px !important;
+  background: rgba(var(--spice-rgb-main-elevated), 0.92) !important;
+  backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid var(--sr-hairline) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.7) !important;
+}
+
+.Dropdown-option {
+  border-radius: 6px;
+  font-size: 14px;
+  color: rgb(var(--spice-rgb-subtext)) !important;
+}
+
+.Dropdown-option:hover,
+.Dropdown-option.is-selected {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: rgb(var(--spice-rgb-text)) !important;
+}
+
+/* Search box: same pill as Spotify's own search */
+.searchbar-bar {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border: 1px solid var(--sr-hairline) !important;
+  border-radius: 999px !important;
+  padding: 8px 16px !important;
+  font: inherit !important;
+  font-size: 14px !important;
+  color: rgb(var(--spice-rgb-text)) !important;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.searchbar-bar:focus {
+  outline: none;
+  border-color: rgba(var(--spice-rgb-button), 0.6) !important;
+  box-shadow: 0 0 0 4px rgba(var(--spice-rgb-button), 0.12) !important;
+}
+
+/* "Themes" / "Extensions" heading: serif, like shelf headings */
+.marketplace-card-type-heading {
+  font-family: var(--sr-serif) !important;
+  font-weight: 400 !important;
+  font-size: 2.1rem !important;
+  color: rgb(var(--spice-rgb-text)) !important;
+  margin: 12px 0 14px !important;
+}
+
+/* Cards: glass, with a clear title → author → description hierarchy */
+.marketplace-grid .main-card-card {
+  background: rgba(255, 255, 255, 0.035) !important;
+  border: 1px solid var(--sr-hairline);
+  border-radius: var(--sr-radius) !important;
+}
+
+.marketplace-grid .main-card-card:hover {
+  background: rgba(255, 255, 255, 0.07) !important;
+}
+
+.marketplace-grid .main-card-card.marketplace-card--installed {
+  border-color: rgba(var(--spice-rgb-button), 0.45);
+}
+
+.marketplace-grid .main-cardImage-imageWrapper,
+.marketplace-grid .main-cardImage-image {
+  border-radius: 10px !important;
+}
+
+.marketplace-grid .main-cardHeader-text {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: rgb(var(--spice-rgb-text)) !important;
+}
+
+.marketplace-grid .marketplace-cardSubHeader,
+.marketplace-grid .marketplace-card__authors,
+.marketplace-grid .marketplace-card__author {
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: rgb(var(--spice-rgb-subtext)) !important;
+}
+
+/* author · ★ stars on one line */
+.marketplace-grid .marketplace-cardSubHeader {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  margin: 2px 0 8px !important;
+}
+
+.marketplace-grid .marketplace-cardSubHeader > * {
+  margin: 0 !important;
+}
+
+.marketplace-grid .marketplace-card-desc {
+  font-family: inherit !important;
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+  color: rgb(var(--spice-rgb-subtext)) !important;
+}
+
+.marketplace-grid .marketplace-card__bottom-meta {
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  color: rgba(var(--spice-rgb-subtext), 0.75) !important;
+}
+
+/* Tags: one quiet chip style. "external JS" keeps its meaning with an
+   accent outline instead of an alarm-red block; "dark"/"light" lose their
+   pitch-black / white fills. */
+.marketplace-grid .main-card-cardMetadata li.marketplace-card__tag,
+.marketplace-grid .main-card-cardMetadata .marketplace-card__tags-more-btn {
+  background: rgba(255, 255, 255, 0.07) !important;
+  color: rgb(var(--spice-rgb-subtext)) !important;
+  border: 1px solid var(--sr-hairline) !important;
+  border-radius: 999px !important;
+  padding: 2px 9px !important;
+  font: inherit !important;
+  font-size: 11.5px !important;
+  font-weight: 500 !important;
+}
+
+.marketplace-grid .main-card-cardMetadata li.marketplace-card__tag[data-tag="external JS"] {
+  background: rgba(var(--spice-rgb-button), 0.1) !important;
+  color: rgb(var(--spice-rgb-button)) !important;
+  border-color: rgba(var(--spice-rgb-button), 0.35) !important;
+}
+
+/* "Load more": a normal pill button instead of a 100px chevron */
+.marketplace-footer button {
+  margin: 28px auto 8px !important;
+  padding: 10px 22px !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  border: 1px solid var(--sr-hairline) !important;
+  border-radius: 999px !important;
+  color: rgb(var(--spice-rgb-text)) !important;
+  transition: background-color 0.2s;
+}
+
+.marketplace-footer button:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.marketplace-footer button p {
+  display: none;
+}
+
+.marketplace-footer button span {
+  font-size: 14px !important;
+  font-weight: 600;
+}
+
+/* README page */
+#marketplace-readme {
+  background: transparent !important;
+  font-family: inherit !important;
+  color: rgb(var(--spice-rgb-subtext));
+}
+
+#marketplace-readme :is(p, li, td, th, a, strong, em, b, i, span, label, button, input, textarea, select) {
+  font-family: inherit !important;
+}
+
+#marketplace-readme :is(h1, h2) {
+  font-family: var(--sr-serif) !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.005em;
+  color: rgb(var(--spice-rgb-text)) !important;
+  border: 0 !important;
+}
+
+#marketplace-readme h1 {
+  font-size: 3rem !important;
+}
+
+#marketplace-readme h2 {
+  font-size: 2.1rem !important;
+}
+
+#marketplace-readme :is(h3, h4, h5, h6) {
+  font-family: inherit !important;
+  font-weight: 700 !important;
+  color: rgb(var(--spice-rgb-text)) !important;
+}
+
+#marketplace-readme a {
+  color: rgb(var(--spice-rgb-button)) !important;
+  text-decoration-color: rgba(var(--spice-rgb-button), 0.4);
+}
+
+#marketplace-readme code {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border: 1px solid var(--sr-hairline) !important;
+  border-radius: 6px !important;
+  color: rgb(var(--spice-rgb-text)) !important;
+}
+
+#marketplace-readme pre {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid var(--sr-hairline) !important;
+  border-radius: 12px !important;
+  padding: 14px 16px !important;
+}
+
+#marketplace-readme pre code {
+  background: none !important;
+  border: 0 !important;
+}
+
+#marketplace-readme :is(table, tr) {
+  background: transparent !important;
+}
+
+#marketplace-readme :is(th, td) {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+#marketplace-readme hr {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+#marketplace-readme blockquote {
+  border-left: 3px solid rgba(var(--spice-rgb-button), 0.5) !important;
+  background: transparent !important;
+}
+
+#marketplace-readme img {
+  border-radius: 12px;
+}
+
+#marketplace-readme kbd {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  color: rgb(var(--spice-rgb-text)) !important;
+}
+
+#marketplace-readme details {
+  background: rgba(255, 255, 255, 0.035) !important;
+  border: 1px solid var(--sr-hairline) !important;
+  border-radius: 12px !important;
+}
+
+#marketplace-readme summary {
+  background: transparent !important;
+  color: rgb(var(--spice-rgb-text)) !important;
+  font-family: inherit !important;
+}
+
+/* Spicetify popups (Marketplace settings and other extensions' dialogs) */
+.GenericModal.spicetify-popup,
+.spicetify-popup-container {
+  background: rgba(var(--spice-rgb-main-elevated), 0.94) !important;
+  backdrop-filter: blur(28px) saturate(1.4);
+  border-radius: 18px !important;
+}
+
+.GenericModal.spicetify-popup {
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+.spicetify-popup-title {
+  font-family: var(--sr-serif) !important;
+  font-weight: 400 !important;
+  font-size: 2rem !important;
+  letter-spacing: -0.005em;
+}
+
+#marketplace-config-container .settings-heading {
+  font-family: var(--sr-serif) !important;
+  font-weight: 400 !important;
+  font-size: 1.6rem !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding-bottom: 6px;
+  margin-top: 22px;
+}
+
+#marketplace-config-container .settings-row .description {
+  color: rgb(var(--spice-rgb-text));
+  font-size: 15px;
+}
+
+#marketplace-config-container .settings-tabs-description {
+  color: rgb(var(--spice-rgb-subtext)) !important;
+  font-style: normal !important;
+}
+
+/* Toggles: neutral track when off, accent track when on */
+[class*="toggle-module__toggle-indicator-wrapper"] {
+  background: rgba(255, 255, 255, 0.16) !important;
+  transition: background-color 0.2s;
+}
+
+[class*="toggle-module__toggle-indicator___"] {
+  background: rgb(var(--spice-rgb-text)) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+[class*="toggle-module__toggle-input"]:checked + [class*="toggle-module__toggle-indicator-wrapper"] {
+  background: rgb(var(--spice-rgb-button)) !important;
+}
+
+[class*="toggle-module__toggle-input"]:checked + [class*="toggle-module__toggle-indicator-wrapper"] [class*="toggle-module__toggle-indicator___"] {
+  background: rgb(var(--spice-rgb-main)) !important;
+}
+
+/* Tab order chips */
+#marketplace-config-container div:has(> .dnd-box) {
+  border: 1px solid var(--sr-hairline) !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+}
+
+#marketplace-config-container .dnd-box {
+  font-size: 14px;
+  font-weight: 600;
+}
+
 /* ---------- menus, tooltips, popovers ---------------------------------- */
 
 .main-contextMenu-menu,

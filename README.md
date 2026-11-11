@@ -26,6 +26,9 @@ in an editorial serif, and the accent colour quietly follows the album art.
 - **Glass all the way down.** Library, main view and sidebar are translucent panels;
   menus are frosted; the player is a floating bar; playlist headers are one even
   colour wash with no seams.
+- **Marketplace included.** The Spicetify Marketplace gets the same treatment:
+  chip tabs, a glass toolbar, glass cards with quiet tags, readable READMEs and
+  a matching settings window, all in Spotify's own UI font.
 - **Small comforts.** Recents and Made For You move to the top of Home, cards lift
   on hover, and the [Cat Jam](https://github.com/BlafKing/spicetify-cat-jam-synced)
   extension sits neatly inside the player bar.
